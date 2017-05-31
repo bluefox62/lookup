@@ -1,6 +1,6 @@
 <html>
 		<head>
-	<title>Find a Contact</title>
+	<title>Contact lookup</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="styles/custom.css" />
 <link rel="stylesheet" href="themes/rasmussenthemeroller.min.css" />
@@ -14,7 +14,7 @@
 		<div id="page" data-role="page" data-theme="b" >
 	<div data-role="header" data-theme="b">
 <h1>
-	Find your contact
+	Contact lookup
 		</h1>	</div>
 				<div data-role="content">
 
@@ -24,19 +24,16 @@
 					include 'opendb.php';
 
 					$fname = (isset($_POST['fname'])    ? $_POST['fname']   : '');
-					$lname = (isset($_POST['lname'])    ? $_POST['lname']   : '');
 
-					$sql= "SELECT id, fname, lname
-					FROM lecture1
-					WHERE fname LIKE '$fname' AND lname LIKE '$lname' LIMIT 1";
+					$sql= "SELECT fname,
+					FROM location
+					WHERE fname  LIMIT 1";
 					$result = mysqli_query($conn, $sql);
 
 					if (mysqli_num_rows($result) > 0) {
 					    // output data of each row
 					    while($row = mysqli_fetch_assoc($result)) {
-									echo "ID: " . $row["id"]. "<br>";
-					        echo "First Name: " . $row["fname"]. "<br>";
-					        echo "Last Name: " . $row["lname"]. "<br><hr>";
+					        echo "First Name: " . $row["fname"]. "<br><hr>";
 					    }
 					} else {
 					    echo "0 results";
@@ -47,7 +44,7 @@
 					?>
 
 				<div data-role="footer" data-theme="b">
-	  <h4>Darice Corey-Gilbert &copy; 2017</h4>
+	  <h4>Brett Riegert &copy; 2017</h4>
 	</div>
 	</body>
 </html>

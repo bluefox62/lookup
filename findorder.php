@@ -1,6 +1,6 @@
 <html>
 		<head>
-	<title>Find a Contact</title>
+	<title>Info lookup</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="styles/custom.css" />
 <link rel="stylesheet" href="themes/rasmussenthemeroller.min.css" />
@@ -14,7 +14,7 @@
 		<div id="page" data-role="page" data-theme="b" >
 	<div data-role="header" data-theme="b">
 <h1>
-	Find your contact
+	Contact Info Lookup
 		</h1>	</div>
 				<div data-role="content">
 
@@ -23,23 +23,23 @@
 					include 'config.php';
 					include 'opendb.php';
 
-					$conf_num = (isset($_POST['conf_num'])    ? $_POST['conf_num']   : '');
+					$fname = (isset($_POST['fname'])    ? $_POST['fname']   : '');
 
-					$sql= "SELECT customers.customerid, customers.fname, customers.lname, customers.state, orders.conf_num, orders.salesrep
-						FROM customers
-						JOIN orders on customers.customerid = orders.customerid
-						WHERE conf_num LIKE '$conf_num' LIMIT 100";
+					$sql= "SELECT contact.id, contact.email, contact.phone, location.city, location.sadd,
+						FROM contact
+						JOIN location on contact.fname = location.fname
+						WHERE fname LIKE '$fname' LIMIT 100";
 					$result = mysqli_query($conn, $sql);
 
 					if (mysqli_num_rows($result) > 0) {
 					    // output data of each row
 					    while($row = mysqli_fetch_assoc($result)) {
-									echo "ID: " . $row["customerid"]. "<br>";
-					        echo "First Name: " . $row["fname"]. "<br>";
-					        echo "Last Name: " . $row["lname"]. "<br>";
-									echo "State: " . $row["state"]. "<br>";
-									echo "Conf. #: " . $row["conf_num"]. "<br>";
-									echo "Sales Rep: " . $row["salesrep"]. "<br>";
+									echo "ID: " . $row["id"]. "<br>";
+					        echo "Email: " . $row["email"]. "<br>";
+					        echo "Phone #: " . $row["phone"]. "<br>";
+									echo "City: " . $row["city"]. "<br>";
+									echo "Address: " . $row["location"]. "<br>";
+									echo "Name: " . $row["fname"]. "<br>";
 					    }
 					} else {
 					    echo "0 results";
@@ -50,7 +50,7 @@
 					?>
 
 				<div data-role="footer" data-theme="b">
-	  <h4>Darice Corey-Gilbert &copy; 2017</h4>
+	  <h4>Brett Riegert &copy; 2017</h4>
 	</div>
 	</body>
 </html>
